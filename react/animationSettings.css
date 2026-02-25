@@ -1,0 +1,53 @@
+.container {
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.subtitles{
+  color: #c3c4c5;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #3f3f40;
+}
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3f3f40;
+}
+
+.saveButtonWrapper {
+  margin-top: 30px;
+  text-align: right;
+}

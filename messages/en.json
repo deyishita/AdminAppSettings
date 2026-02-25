@@ -1,4 +1,5 @@
 {
   "admin/test": "test",
-  "store/test": "test"
+  "store/test": "test",
+  "admin-animation-settings.navigation.label": "Animation settings"
 }

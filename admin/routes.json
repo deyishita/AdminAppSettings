@@ -1,0 +1,6 @@
+{
+  "admin.app.animation-settings": {
+    "component": "AnimationSettings",
+    "path": "/admin/app/animation-settings"
+  }
+}

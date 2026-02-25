@@ -1,0 +1,14 @@
+
+mutation saveAppSettings(
+  $app: String
+  $version: String
+  $settings: String
+) {
+  saveAppSettings(
+    app: $app
+    version: $version
+    settings: $settings
+  ) @context(provider: "vtex.apps-graphql") {
+    message
+  }
+}
