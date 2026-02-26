@@ -8,38 +8,66 @@ import appSettings from './query/getAppSettings.graphql'
 
 const AnimationSettings = () => {
   const [isEnabled, setIsEnabled] = useState(false)
-  const [quickView, setQuickView] = useState('1000')
-  const [flyCoinToCartSpeed, setFlyCoinToCartSpeed] = useState('1')
-  const [dropCoinSpeed, setDropCoinSpeed] = useState('1000')
-  const [priceRefreshTime, setPriceRefreshTime] = useState('1000')
+  const [quickView, setQuickView] = useState(1000)
+  const [flyCoinToCartSpeed, setFlyCoinToCartSpeed] = useState(1)
+  const [dropCoinSpeed, setDropCoinSpeed] = useState(200)
+  const [priceRefreshTime, setPriceRefreshTime] = useState(1000)
   const [loading, setLoading] = useState(false)
 
 
   const options = [
-    { value: "1000", label: "1000 ms" },
-    { value: "2000", label: "2000 ms" },
-    { value: "3000", label: "3000 ms" },
-    { value: "4000", label: "4000 ms" },
-    { value: "5000", label: "5000 ms" },
-    { value: "6000", label: "6000 ms" },
-    { value: "7000", label: "7000 ms" },
-    { value: "8000", label: "8000 ms" },
-    { value: "9000", label: "9000 ms" },
-    { value: "10000", label: "10000 ms" },
+    { value: 1000, label: "1000 ms" },
+    { value: 2000, label: "2000 ms" },
+    { value: 3000, label: "3000 ms" },
+    { value: 4000, label: "4000 ms" },
+    { value: 5000, label: "5000 ms" },
+    { value: 6000, label: "6000 ms" },
+    { value: 7000, label: "7000 ms" },
+    { value: 8000, label: "8000 ms" },
+    { value: 9000, label: "9000 ms" },
+    { value: 10000, label: "10000 ms" },
+  ]
+
+  const quickViewSpeedOptions = [
+    { value: 1, label: "1000 ms" },
+    { value: 2, label: "2000 ms" },
+    { value: 3, label: "3000 ms" },
+    { value: 4, label: "4000 ms" },
+    { value: 5, label: "5000 ms" },
+    { value: 6, label: "6000 ms" },
+    { value: 7, label: "7000 ms" },
+    { value: 8, label: "8000 ms" },
+    { value: 9, label: "9000 ms" },
+    { value: 10, label: "10000 ms" },
   ]
 
   const flyCoinOptions = [
-    { value: "1", label: "1000 ms" },
-    { value: "2", label: "2000 ms" },
-    { value: "3", label: "3000 ms" },
-    { value: "4", label: "4000 ms" },
-    { value: "5", label: "5000 ms" },
-    { value: "6", label: "6000 ms" },
-    { value: "7", label: "7000 ms" },
-    { value: "8", label: "8000 ms" },
-    { value: "9", label: "9000 ms" },
-    { value: "10", label: "10000 ms" },
+    { value: 1, label: "1000 ms" },
+    { value: 2, label: "2000 ms" },
+    { value: 3, label: "3000 ms" },
+    { value: 4, label: "4000 ms" },
+    { value: 5, label: "5000 ms" },
+    { value: 6, label: "6000 ms" },
+    { value: 7, label: "7000 ms" },
+    { value: 8, label: "8000 ms" },
+    { value: 9, label: "9000 ms" },
+    { value: 10, label: "10000 ms" },
   ]
+
+  const coinDropOptions = [
+    { value: 200, label: "200 ms" },
+    { value: 300, label: "300 ms" },
+    { value: 400, label: "400 ms" },
+    { value: 500, label: "500 ms" },
+    { value: 600, label: "600 ms" },
+    { value: 700, label: "700 ms" },
+    { value: 800, label: "800 ms" },
+    { value: 900, label: "900 ms" },
+    { value: 1000, label: "1000 ms" },
+    { value: 1100, label: "1100 ms" },
+    { value: 1200, label: "1200 ms" }
+  ]
+
 
   const { data, loading: queryLoading } = useQuery(appSettings)
   console.log('data settings>>>>', data);
@@ -52,15 +80,15 @@ const AnimationSettings = () => {
         const parsed = JSON.parse(data.appSettings.message)
 
         setIsEnabled(parsed.siteAnimationEnabled ?? false)
-        setQuickView(parsed.quickViewAnimationSpeed ?? '1000')
-        setFlyCoinToCartSpeed(parsed.flyCoinToCartSpeed ?? '1')
-        setDropCoinSpeed(parsed.dropCoinSpeed ?? '1000')
-        setPriceRefreshTime(parsed.priceRefreshTime ?? '1000')
+        setQuickView(Number(parsed.quickViewAnimationSpeed) || 1000)
+        setFlyCoinToCartSpeed(Number(parsed.flyCoinToCartSpeed) || 1)
+        setDropCoinSpeed(Number(parsed.dropCoinSpeed) || 200)
+        setPriceRefreshTime(Number(parsed.priceRefreshTime) || 1000)
       } catch (error) {
         console.error('Error parsing settings:', error)
       }
     }
-  }, [data])
+}, [data])
 
   const [handleSaveAppSettings] = useMutation(saveAppSettings)
 
@@ -129,9 +157,9 @@ const AnimationSettings = () => {
       </label>
       <Dropdown
         size="medium"
-        options={options}
+        options={quickViewSpeedOptions}
         value={quickView}
-        onChange={(e) => setQuickView(e.target.value)}
+        onChange={({ target: { value } }) => setQuickView(Number(value))}
       />
     </div>
 
@@ -144,7 +172,7 @@ const AnimationSettings = () => {
         size="medium"
         options={flyCoinOptions}
         value={flyCoinToCartSpeed}
-        onChange={(e) => setFlyCoinToCartSpeed(e.target.value)}
+        onChange={({target: { value }}) => setFlyCoinToCartSpeed(Number(value))}
       />
     </div>
 
@@ -155,9 +183,9 @@ const AnimationSettings = () => {
       </label>
       <Dropdown
         size="medium"
-        options={options}
+        options={coinDropOptions}
         value={dropCoinSpeed}
-        onChange={(e) => setDropCoinSpeed(e.target.value)}
+        onChange={({target: { value }}) => setDropCoinSpeed(Number(value))}
       />
     </div>
 
@@ -171,7 +199,7 @@ const AnimationSettings = () => {
         size="medium"
         options={options}
         value={priceRefreshTime}
-        onChange={(e) => setPriceRefreshTime(e.target.value)}
+        onChange={({ target: { value } }) => setPriceRefreshTime(Number(value))}
       />
     </div>
 
