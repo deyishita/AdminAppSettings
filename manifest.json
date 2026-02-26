@@ -1,7 +1,7 @@
 {
   "vendor": "demoaccount35",
   "name": "admin-app-settings",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "title": "Animation Settings",
   "description": "This app is used to handle the store animation settings",
   "builders": {
