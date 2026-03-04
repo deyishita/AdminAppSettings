@@ -11,12 +11,13 @@ const AnimationSettings = () => {
   const [quickView, setQuickView] = useState(1000)
   const [flyCoinToCartSpeed, setFlyCoinToCartSpeed] = useState(1)
   const [dropCoinSpeed, setDropCoinSpeed] = useState(200)
-  const [priceRefreshTime, setPriceRefreshTime] = useState(1000)
+  const [priceRefreshTime, setPriceRefreshTime] = useState(0)
   const [priceAnimSpeed, setPriceAnimSpeed] = useState(0.6)
   const [loading, setLoading] = useState(false)
 
 
   const options = [
+    { value: 0, label: "0ms" },
     { value: 1000, label: "1000 ms" },
     { value: 2000, label: "2000 ms" },
     { value: 3000, label: "3000 ms" },
@@ -81,7 +82,10 @@ const AnimationSettings = () => {
     { value: 0.9, label: "900 ms" },
     { value: 1, label: "1000 ms" },
     { value: 1.1, label: "1100 ms" },
-    { value: 1.2, label: "1200 ms" }
+    { value: 1.2, label: "1200 ms" },
+    { value: 1.3, label: "1300 ms" },
+    { value: 1.4, label: "1400 ms" },
+    { value: 1.5, label: "1500 ms" }
   ]
 
 
@@ -94,12 +98,12 @@ const AnimationSettings = () => {
     if (data?.appSettings?.message) {
       try {
         const parsed = JSON.parse(data.appSettings.message)
-
         setIsEnabled(parsed.siteAnimationEnabled ?? false)
         setQuickView(Number(parsed.quickViewAnimationSpeed) || 1000)
         setFlyCoinToCartSpeed(Number(parsed.flyCoinToCartSpeed) || 1)
         setDropCoinSpeed(Number(parsed.dropCoinSpeed) || 200)
-        setPriceRefreshTime(Number(parsed.priceRefreshTime) || 1000)
+        setPriceRefreshTime(Number(parsed.priceRefreshTime) || 0)
+        setPriceAnimSpeed(Number(parsed.priceAnimationSpeed) || 0.6)
       } catch (error) {
         console.error('Error parsing settings:', error)
       }
@@ -210,7 +214,7 @@ const AnimationSettings = () => {
       <div className={styles.section}>
         <p className={styles.subtitles}>Buy Animation Settings</p>
         <label className={styles.label}>
-          Price Refresh Time (ms)
+          Price fetch Interval (ms)
         </label>
         <Dropdown
           size="medium"
