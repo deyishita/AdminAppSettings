@@ -12,6 +12,7 @@ const AnimationSettings = () => {
   const [flyCoinToCartSpeed, setFlyCoinToCartSpeed] = useState(1)
   const [dropCoinSpeed, setDropCoinSpeed] = useState(200)
   const [priceRefreshTime, setPriceRefreshTime] = useState(1000)
+  const [priceAnimSpeed, setPriceAnimSpeed] = useState(0.6)
   const [loading, setLoading] = useState(false)
 
 
@@ -68,6 +69,21 @@ const AnimationSettings = () => {
     { value: 1200, label: "1200 ms" }
   ]
 
+  const priceAnimationSpeed = [
+    { value: 0.1, label: "100 ms" },
+    { value: 0.2, label: "200 ms" },
+    { value: 0.3, label: "300 ms" },
+    { value: 0.4, label: "400 ms" },
+    { value: 0.5, label: "500 ms" },
+    { value: 0.6, label: "600 ms" },
+    { value: 0.7, label: "700 ms" },
+    { value: 0.8, label: "800 ms" },
+    { value: 0.9, label: "900 ms" },
+    { value: 1, label: "1000 ms" },
+    { value: 1.1, label: "1100 ms" },
+    { value: 1.2, label: "1200 ms" }
+  ]
+
 
   const { data, loading: queryLoading } = useQuery(appSettings)
   console.log('data settings>>>>', data);
@@ -88,7 +104,7 @@ const AnimationSettings = () => {
         console.error('Error parsing settings:', error)
       }
     }
-}, [data])
+  }, [data])
 
   const [handleSaveAppSettings] = useMutation(saveAppSettings)
 
@@ -103,6 +119,7 @@ const AnimationSettings = () => {
       flyCoinToCartSpeed: flyCoinToCartSpeed,
       dropCoinSpeed: dropCoinSpeed,
       priceRefreshTime: priceRefreshTime,
+      priceAnimationSpeed: priceAnimSpeed
     }
 
     const variables = {
@@ -130,91 +147,104 @@ const AnimationSettings = () => {
   }
 
   return (
-  <div className={styles.container}>
-    <h1 className={styles.title}>Animation Settings</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Animation Settings</h1>
 
-    <p className={styles.subtitle}>
-      Configure animation behavior for your store
-    </p>
+      <p className={styles.subtitle}>
+        Configure animation behavior for your store
+      </p>
 
-    <p className={styles.subtitles}>Sell Animations Settigs</p>
-    {/* Checkbox */}
-    <div className={styles.section}>
-      <label className={styles.checkboxWrapper}>
-        <input
-          type="checkbox"
-          checked={isEnabled}
-          onChange={(e) => setIsEnabled(e.target.checked)}
+      <p className={styles.subtitles}>Sell Animations Settigs</p>
+      {/* Checkbox */}
+      <div className={styles.section}>
+        <label className={styles.checkboxWrapper}>
+          <input
+            type="checkbox"
+            checked={isEnabled}
+            onChange={(e) => setIsEnabled(e.target.checked)}
+          />
+          Site Animation Enabled/Disabled
+        </label>
+      </div>
+
+      {/* Quick View */}
+      <div className={styles.section}>
+        <label className={styles.label}>
+          360° Quick View (3D) Speed (ms)
+        </label>
+        <Dropdown
+          size="medium"
+          options={quickViewSpeedOptions}
+          value={quickView}
+          onChange={({ target: { value } }) => setQuickView(Number(value))}
         />
-        Site Animation Enabled/Disabled
-      </label>
-    </div>
+      </div>
 
-    {/* Quick View */}
-    <div className={styles.section}>
-      <label className={styles.label}>
-        360° Quick View (3D) Speed (ms)
-      </label>
-      <Dropdown
-        size="medium"
-        options={quickViewSpeedOptions}
-        value={quickView}
-        onChange={({ target: { value } }) => setQuickView(Number(value))}
-      />
-    </div>
+      {/* Fly Coin */}
+      <div className={styles.section}>
+        <label className={styles.label}>
+          Fly Coin to Cart Speed (ms)
+        </label>
+        <Dropdown
+          size="medium"
+          options={flyCoinOptions}
+          value={flyCoinToCartSpeed}
+          onChange={({ target: { value } }) => setFlyCoinToCartSpeed(Number(value))}
+        />
+      </div>
 
-    {/* Fly Coin */}
-    <div className={styles.section}>
-      <label className={styles.label}>
-        Fly Coin to Cart Speed (ms)
-      </label>
-      <Dropdown
-        size="medium"
-        options={flyCoinOptions}
-        value={flyCoinToCartSpeed}
-        onChange={({target: { value }}) => setFlyCoinToCartSpeed(Number(value))}
-      />
-    </div>
+      {/* Drop Coin */}
+      <div className={styles.section}>
+        <label className={styles.label}>
+          Drop Coin Animation Speed (ms)
+        </label>
+        <Dropdown
+          size="medium"
+          options={coinDropOptions}
+          value={dropCoinSpeed}
+          onChange={({ target: { value } }) => setDropCoinSpeed(Number(value))}
+        />
+      </div>
 
-    {/* Drop Coin */}
-    <div className={styles.section}>
-      <label className={styles.label}>
-        Drop Coin Animation Speed (ms)
-      </label>
-      <Dropdown
-        size="medium"
-        options={coinDropOptions}
-        value={dropCoinSpeed}
-        onChange={({target: { value }}) => setDropCoinSpeed(Number(value))}
-      />
-    </div>
+      {/* Price Refresh */}
+      <div className={styles.section}>
+        <p className={styles.subtitles}>Buy Animation Settings</p>
+        <label className={styles.label}>
+          Price Refresh Time (ms)
+        </label>
+        <Dropdown
+          size="medium"
+          options={options}
+          value={priceRefreshTime}
+          onChange={({ target: { value } }) => setPriceRefreshTime(Number(value))}
+        />
+      </div>
+      {/* Price Animation Speed*/}
+      <div className={styles.section}>
+        <p className={styles.subtitles}>Price Animation Speed</p>
+        <label className={styles.label}>
+          Price Animation Speed (ms)
+        </label>
+        <Dropdown
+          size="medium"
+          options={priceAnimationSpeed}
+          value={priceAnimSpeed}
+          onChange={({ target: { value } }) => setPriceAnimSpeed(Number(value))}
+        />
+      </div>
 
-    {/* Price Refresh */}
-    <div className={styles.section}>
-      <p className={styles.subtitles}>Buy Animation Settings</p>
-      <label className={styles.label}>
-        Price Refresh Time (ms)
-      </label>
-      <Dropdown
-        size="medium"
-        options={options}
-        value={priceRefreshTime}
-        onChange={({ target: { value } }) => setPriceRefreshTime(Number(value))}
-      />
+      {/* Save Button */}
+      <div className={styles.saveButtonWrapper}>
+        <Button
+          variation="primary"
+          isLoading={loading}
+          onClick={handleSave}
+        >
+          Save Settings
+        </Button>
+      </div>
     </div>
-
-    {/* Save Button */}
-    <div className={styles.saveButtonWrapper}>
-      <Button
-        variation="primary"
-        isLoading={loading}
-        onClick={handleSave}
-      >
-        Save Settings
-      </Button>
-    </div>
-  </div>
-)
+  )
 }
 
 export default AnimationSettings;
